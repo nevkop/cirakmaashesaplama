@@ -18,67 +18,61 @@ body{
 
     font-family:Arial, sans-serif;
 
-    background: linear-gradient(135deg, #0f172a, #1e293b);
+    background: white;
 
-    color:white;
+    color:#111827;
 }
 
 .kart{
 
-    width:90%;
-    max-width:550px;
+    width:320px;
 
-    background: rgba(255,255,255,0.08);
+    background: #ffffff;
 
-    border:1px solid rgba(255,255,255,0.15);
+    border:1px solid #e5e7eb;
 
-    border-radius:25px;
+    border-radius:18px;
 
-    padding:40px;
+    padding:20px;
 
     text-align:center;
 
-    backdrop-filter: blur(10px);
-
     box-shadow:
-    0 0 30px rgba(0,0,0,0.35);
+    0 4px 18px rgba(0,0,0,0.08);
 }
 
 .baslik{
-    font-size:34px;
+    font-size:20px;
     font-weight:bold;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .alt{
-    opacity:0.8;
-    margin-bottom:30px;
-    font-size:17px;
-    line-height:1.5;
+    color:#6b7280;
+    margin-bottom:18px;
+    font-size:13px;
+    line-height:1.4;
 }
 
 .sayac{
 
-    font-size:34px;
+    font-size:20px;
     font-weight:bold;
 
-    line-height:1.6;
+    line-height:1.5;
 
-    color:#38bdf8;
-
-    text-shadow:
-    0 0 15px rgba(56,189,248,0.6);
+    color:#2563eb;
 }
 
 .okul{
 
-    margin-top:30px;
+    margin-top:18px;
 
-    font-size:15px;
+    font-size:11px;
 
-    opacity:0.7;
+    color:#9ca3af;
 
-    letter-spacing:1px;
+    letter-spacing:0.5px;
 }
 
 </style>
@@ -89,11 +83,11 @@ body{
 <div class="kart">
 
     <div class="baslik">
-        📄 Dekont Gönderim Süresi
+        📄 Dekont Süresi
     </div>
 
     <div class="alt">
-        Dekontlar her ayın 1'i ile 8'i saat 17:00'a kadar gönderilmelidir.
+        Her ayın 1'i ile 8'i 17:00'a kadar.
     </div>
 
     <div class="sayac" id="sayac">
@@ -115,37 +109,20 @@ function sayaciGuncelle(){
     const yil = simdi.getFullYear();
     const ay = simdi.getMonth();
 
-    // Her ayın 1'i 00:00
-    const baslangic = new Date(yil, ay, 1, 0, 0, 0);
-
-    // Her ayın 8'i 17:00
     const bitis = new Date(yil, ay, 8, 17, 0, 0);
 
     const alan = document.getElementById("sayac");
 
-    // Ayın 1'inden önce
-    if(simdi < baslangic){
-
-        alan.innerHTML =
-        "⏳ Dekont gönderim süresi henüz başlamadı";
-
-        alan.style.color = "#facc15";
-
-        return;
-    }
-
-    // Ayın 8'i 17:00 sonrası
     if(simdi > bitis){
 
         alan.innerHTML =
-        "✅ Bu ayın dekont süresi sona ermiştir.<br><br>📌 Yeni dönem dekont gönderimi ayın 1'inde başlayacaktır.";
+        "✅ Süre sona erdi<br><br>📌 Yeni dönem ayın 1'inde başlayacak";
 
-        alan.style.color = "#22c55e";
+        alan.style.color = "#16a34a";
 
         return;
     }
 
-    // Sayaç aktif
     const fark = bitis - simdi;
 
     const gun = Math.floor(fark / (1000*60*60*24));
@@ -156,14 +133,13 @@ function sayaciGuncelle(){
 
     const saniye = Math.floor((fark / 1000) % 60);
 
-    alan.style.color = "#38bdf8";
+    alan.style.color = "#2563eb";
 
     alan.innerHTML =
-    "⏳<br>" +
-    gun + " Gün<br>" +
-    saat + " Saat " +
-    dakika + " Dakika " +
-    saniye + " Saniye";
+    gun + "G " +
+    saat + "S " +
+    dakika + "D " +
+    saniye + "Sn";
 
 }
 
