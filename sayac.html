@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dekont Süresi</title>
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-family:Arial, sans-serif;
+
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+
+    color:white;
+}
+
+.kart{
+
+    width:90%;
+    max-width:550px;
+
+    background: rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.15);
+
+    border-radius:25px;
+
+    padding:40px;
+
+    text-align:center;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+    0 0 30px rgba(0,0,0,0.35);
+}
+
+.baslik{
+    font-size:34px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.alt{
+    opacity:0.8;
+    margin-bottom:30px;
+    font-size:17px;
+    line-height:1.5;
+}
+
+.sayac{
+
+    font-size:34px;
+    font-weight:bold;
+
+    line-height:1.6;
+
+    color:#38bdf8;
+
+    text-shadow:
+    0 0 15px rgba(56,189,248,0.6);
+}
+
+.okul{
+
+    margin-top:30px;
+
+    font-size:15px;
+
+    opacity:0.7;
+
+    letter-spacing:1px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="kart">
+
+    <div class="baslik">
+        📄 Dekont Gönderim Süresi
+    </div>
+
+    <div class="alt">
+        Dekontlar her ayın 1'i ile 8'i saat 17:00'a kadar gönderilmelidir.
+    </div>
+
+    <div class="sayac" id="sayac">
+        Yükleniyor...
+    </div>
+
+    <div class="okul">
+        Şakirpaşa Mesleki ve Teknik Anadolu Lisesi
+    </div>
+
+</div>
+
+<script>
+
+function sayaciGuncelle(){
+
+    const simdi = new Date();
+
+    const yil = simdi.getFullYear();
+    const ay = simdi.getMonth();
+
+    // Her ayın 1'i 00:00
+    const baslangic = new Date(yil, ay, 1, 0, 0, 0);
+
+    // Her ayın 8'i 17:00
+    const bitis = new Date(yil, ay, 8, 17, 0, 0);
+
+    const alan = document.getElementById("sayac");
+
+    // Ayın 1'inden önce
+    if(simdi < baslangic){
+
+        alan.innerHTML =
+        "⏳ Dekont gönderim süresi henüz başlamadı";
+
+        alan.style.color = "#facc15";
+
+        return;
+    }
+
+    // Ayın 8'i 17:00 sonrası
+    if(simdi > bitis){
+
+        alan.innerHTML =
+        "✅ Bu ayın dekont süresi sona ermiştir.<br><br>📌 Yeni dönem dekont gönderimi ayın 1'inde başlayacaktır.";
+
+        alan.style.color = "#22c55e";
+
+        return;
+    }
+
+    // Sayaç aktif
+    const fark = bitis - simdi;
+
+    const gun = Math.floor(fark / (1000*60*60*24));
+
+    const saat = Math.floor((fark / (1000*60*60)) % 24);
+
+    const dakika = Math.floor((fark / (1000*60)) % 60);
+
+    const saniye = Math.floor((fark / 1000) % 60);
+
+    alan.style.color = "#38bdf8";
+
+    alan.innerHTML =
+    "⏳<br>" +
+    gun + " Gün<br>" +
+    saat + " Saat " +
+    dakika + " Dakika " +
+    saniye + " Saniye";
+
+}
+
+sayaciGuncelle();
+
+setInterval(sayaciGuncelle,1000);
+
+</script>
+
+</body>
+</html>
